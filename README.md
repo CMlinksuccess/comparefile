@@ -1,5 +1,5 @@
 # comparefile
-mac下对比文件夹内所有文件内容，输出新增或修改的文件列表的脚本
+Mac下对比文件夹下所有的文件修改或新增，并输出列表信息的脚本
 <br><br>
 注意⚠️：python语言在MAC和windows下运行环境有差异，所以在windows下并不能直接使用
 <br><br>
