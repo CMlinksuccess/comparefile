@@ -39,6 +39,9 @@ def menu_fun():
         elif sel=="2":
 			rawpath  = raw_input("请输入文件或文件夹路径:")
 			rawpath  = rawpath.strip()
+			if os.path.isfile(rawpath):
+				print ("文件大小为:%s"%getFileSize(rawpath))
+				continue
 			if isEmpty(rawpath):
 				print("目录不能为空")
 				continue
@@ -215,61 +218,9 @@ def changelist(re,rawpath, rawpath2):
 	file.write(line)
 	file.close()
 	print("结果已保存至compare.txt中")
-
-def contentlist(dirname,olddirname):
-	global fixedpath
-	global headtext
-	result = []
-	file = open(curpath + "/filelist.list","w")
-	line = headtext
-	if len(fixedpath)==0:
-	    fixedpath = dirname
-
-	for maindir, subdir, file_name_list in os.walk(dirname):
-		linetext = savecontent(maindir, dirname, olddirname)
-		if len(linetext)>0:
-			line = line + linetext + "\n"
-
-	if operatetype == 1:
-		for maindir, subdir, file_name_list in os.walk(dirname):
-			firstdir = maindir.replace(dirname + "/","",1)
-			dirArr = firstdir.split("/")
-			if len(dirArr)==1:
-				line = line + "\n"
-			for filename in file_name_list:
-				if not isFilter(filename):	
-					apath = os.path.join(maindir,filename)
-					line = line + "\n" + savecontent(apath, dirname, olddirname)
-	elif operatetype == 2:
-		for maindir, subdir, file_name_list in os.walk(dirname):
-			firstdir = maindir.replace(dirname + "/","",1)
-			dirArr = firstdir.split("/")
-			if len(dirArr)==1:
-				line = line + "\n"
-			for filename in file_name_list:
-				if isScreen(filename):
-					apath = os.path.join(maindir,filename)
-					line = line + "\n" + savecontent(apath, dirname, olddirname)
-	else:
-		for maindir, subdir, file_name_list in os.walk(dirname):
-			firstdir = maindir.replace(dirname + "/","",1)
-			dirArr = firstdir.split("/")
-			if len(dirArr)==1:
-				line = line + "\n"
-			for filename in file_name_list:
-				apath = os.path.join(maindir,filename)
-				line = line + "\n" + savecontent(apath, dirname, olddirname)
-
-	if len(line)==0:
-		line = "该目录无更新文件"
-	file.write(line)
-	file.close()
-	print("结果已保存至filelist.list中")
-
-	return result
 		
 def help():
-	print("\n 该工具主要查看指定目录下的所有文件及路径,对比两文件夹文件的不同,具体内容如下:\n 选1:则输出当前目录及子目录所有文件信息\n 选2:则输出文件夹的大小及子一级文件或目录的大小\n 选3:则输出版本更新文件列表，修改或新增列表，输入目录顺序不同结果不同\n 选4:设置全局的帅选或过滤条件,若需取消则需重新设置为空\n 选5:则查看帮助\n 选0:则退出工具\n\n 注意: 若输入目录中包含中文则可能导致结果错误")
+	print("\n 该工具主要查看指定目录下的所有文件及路径,对比两文件夹文件的不同,具体内容如下:\n 选1:则输出当前目录及子目录所有文件信息\n 选2:则输出文件夹的大小及子一级文件或目录的大小\n 选3:则输出版本更新文件列表，修改或新增列表，输入目录顺序不同结果不同\n 选4:设置全局的帅选或过滤条件（类型无需输入.）,若需取消则需重新设置为空\n 选5:则查看帮助\n 选0:则退出工具\n\n 注意: 若输入目录中包含中文则可能导致结果错误")
 	return
 
 def main():
